@@ -8,11 +8,13 @@ import Suggestions from "../components/Suggestions";
 const GET_MOVIE = gql`
   query getMovie($id: Int!) {
     movie(id: $id) {
+      id
       title_long
       runtime
       medium_cover_image
       description_intro
       rating
+      isLiked @client
     }
     suggestions(id: $id) {
       id
@@ -99,7 +101,9 @@ export default () => {
       <ColumnAndPoster>
         <Column>
           <Title>
-            {loading ? "Loading..." : "제목: " + data.movie.title_long}
+            {loading
+              ? "Loading..."
+              : `${data.movie.title_long} ${data.movie.isLiked ? "💖" : "🤍"}`}
           </Title>
           {!loading && (
             <>
