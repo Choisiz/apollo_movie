@@ -8,10 +8,8 @@ import Suggestions from "../components/Suggestions";
 const GET_MOVIE = gql`
   query getMovie($id: Int!) {
     movie(id: $id) {
-      title
       title_long
       runtime
-      language
       medium_cover_image
       description_intro
       rating
@@ -103,20 +101,18 @@ export default () => {
           <Title>
             {loading ? "Loading..." : "제목: " + data.movie.title_long}
           </Title>
-          {!loading && data.movie && (
+          {!loading && (
             <>
               <SubTitle>
-                평점: {data.movie.rating}점 런닝타임: {data.movie.runtime}분
+                평점: {data?.movie?.rating}점 런닝타임: {data?.movie?.runtime}분
               </SubTitle>
               <Description>
-                상세정보 : {data.movie.description_intro}
+                상세정보 : {data?.movie?.description_intro}
               </Description>
             </>
           )}
         </Column>
-        <Poseter
-          bg={data && data.movie ? data.movie.medium_cover_image : ""}
-        ></Poseter>
+        <Poseter bg={data?.movie?.medium_cover_image}></Poseter>
       </ColumnAndPoster>
       {data && data.suggestions && (
         <>
